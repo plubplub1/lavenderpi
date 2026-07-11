@@ -1,2 +1,0 @@
-# lavenderpi
-mc server
