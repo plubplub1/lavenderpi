@@ -1,0 +1,18 @@
+name: LavenderRP
+
+version: 0.0.1
+
+main: me.lavender.core.LavenderRP
+
+api-version: '1.21'
+
+author: LavenderGPT
+
+description: The Last of Us x The Mist
+
+commands:
+  lav:
+    description: Project Lavender
+    usage: /lav
+    aliases:
+      - lavender
