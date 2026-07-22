@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lavender Home OS — GRIM</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body data-page="ai">
+  <div id="lh-header"></div>
+  <div class="app-shell">
+    <div id="lh-sidebar"></div>
+    <main class="app-main">
+      <div class="page-wrap narrow">
+        <div class="page-header">
+          <h1 class="font-display">GRIM</h1>
+          <p>Your integrated network assistant.</p>
+        </div>
+
+        <div class="glass chat-panel">
+          <div id="chat-scroll" class="chat-scroll"></div>
+          <div id="chat-error" class="chat-error" style="display:none;margin:0 1rem;"></div>
+          <div class="chat-input-row">
+            <form id="chat-form" class="glass chat-input-box">
+              <input id="chat-input" type="text" placeholder="Ask about your network..." autocomplete="off">
+              <button type="submit" class="chat-send" id="chat-icon"></button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <div id="lh-mobile-nav"></div>
+
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/icons.js"></script>
+  <script src="assets/js/mock-data.js"></script>
+  <script src="assets/js/settings-store.js"></script>
+  <script src="assets/js/router-client.js"></script>
+  <script src="assets/js/store.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/pages/ai.js"></script>
+  <script>document.getElementById("chat-icon").innerHTML = LHIcons.send;</script>
+</body>
+</html>

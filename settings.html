@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lavender Home OS — Settings</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body data-page="settings">
+  <div id="lh-header"></div>
+  <div class="app-shell">
+    <div id="lh-sidebar"></div>
+    <main class="app-main">
+      <div class="page-wrap narrow">
+        <div class="page-header">
+          <h1 class="font-display">Settings</h1>
+          <p>Router connection, GRIM key, refresh rate, and data export.</p>
+        </div>
+
+        <div class="settings-list">
+          <div class="card">
+            <h2 class="font-display" style="font-size:1rem;font-weight:500;margin:0 0 1rem;">Router Connection</h2>
+            <div id="connection-status"></div>
+            <p class="settings-note">
+              Stored only in this browser's <code>localStorage</code> — never uploaded anywhere. Note: most routers block
+              cross-origin browser requests (CORS), so a live connection may not succeed even with correct credentials — see
+              README for details.
+            </p>
+          </div>
+
+          <form id="settings-form" class="card">
+            <h2 class="font-display" style="font-size:1rem;font-weight:500;margin:0 0 1rem;">Connection Details</h2>
+            <div style="display:grid;gap:1rem;">
+              <div>
+                <label class="field-label" for="routerHost">Router address</label>
+                <input type="text" id="routerHost" placeholder="192.168.1.1">
+              </div>
+              <div>
+                <label class="field-label" for="routerUsername">Username</label>
+                <input type="text" id="routerUsername" placeholder="admin">
+              </div>
+              <div>
+                <label class="field-label" for="routerPassword">Password</label>
+                <input type="password" id="routerPassword" placeholder="••••••••">
+              </div>
+              <div>
+                <label class="field-label" for="anthropicApiKey">Anthropic API key (for GRIM)</label>
+                <input type="password" id="anthropicApiKey" placeholder="sk-ant-...">
+              </div>
+              <div>
+                <label class="field-label" for="refreshInterval">Refresh interval — <span id="refreshIntervalLabel">3s</span></label>
+                <input type="range" id="refreshInterval" min="1" max="10" value="3">
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:1rem;margin-top:1.5rem;">
+              <button type="submit" class="btn-accent">Save settings</button>
+              <span id="save-confirmation" style="opacity:0;transition:opacity .3s;font-size:.8125rem;color:var(--success);">Saved</span>
+            </div>
+          </form>
+
+          <div class="card">
+            <h2 class="font-display" style="font-size:1rem;font-weight:500;margin:0 0 1rem;">Theme</h2>
+            <div class="swatch-row">
+              <div class="swatch"><div class="swatch-color" style="background:#B38CFF"></div><span>Lavender</span></div>
+              <div class="swatch"><div class="swatch-color" style="background:#4CFF78"></div><span>Success</span></div>
+              <div class="swatch"><div class="swatch-color" style="background:#FF5C5C"></div><span>Error</span></div>
+              <div class="swatch"><div class="swatch-color" style="background:#151515"></div><span>Base</span></div>
+              <div class="swatch"><div class="swatch-color" style="background:#1D1D1D"></div><span>Card</span></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2 class="font-display" style="font-size:1rem;font-weight:500;margin:0 0 1rem;">Export Logs</h2>
+            <button id="export-logs-btn" class="btn-accent" type="button">
+              <span id="export-icon" style="display:inline-flex"></span>
+              Export as JSON
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <div id="lh-mobile-nav"></div>
+
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/icons.js"></script>
+  <script src="assets/js/mock-data.js"></script>
+  <script src="assets/js/settings-store.js"></script>
+  <script src="assets/js/router-client.js"></script>
+  <script src="assets/js/store.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/pages/settings.js"></script>
+  <script>document.getElementById("export-icon").innerHTML = LHIcons.download;</script>
+</body>
+</html>

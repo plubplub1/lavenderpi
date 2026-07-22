@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lavender Home OS — Devices</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body data-page="devices">
+  <div id="lh-header"></div>
+  <div class="app-shell">
+    <div id="lh-sidebar"></div>
+    <main class="app-main">
+      <div class="page-wrap">
+        <div class="page-header">
+          <h1 class="font-display">Devices</h1>
+          <p>Everything connected to your network, updated every 3 seconds.</p>
+        </div>
+
+        <div style="margin-bottom:1.25rem;display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;">
+          <div class="glass search-box">
+            <span style="display:inline-flex" id="search-icon"></span>
+            <input id="device-search" type="text" placeholder="Search devices, MAC, IP...">
+          </div>
+          <span id="device-count" style="font-size:.875rem;color:var(--ink-faint);"></span>
+        </div>
+
+        <div class="glass device-table">
+          <div class="device-table-head">
+            <span>Device</span>
+            <span>MAC Address</span>
+            <span>IP Address</span>
+            <span>Signal / Band</span>
+            <span>Download</span>
+            <span>Upload</span>
+            <span>Status</span>
+          </div>
+          <div id="device-rows"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <div id="lh-mobile-nav"></div>
+
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/icons.js"></script>
+  <script src="assets/js/mock-data.js"></script>
+  <script src="assets/js/settings-store.js"></script>
+  <script src="assets/js/router-client.js"></script>
+  <script src="assets/js/store.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/pages/devices.js"></script>
+  <script>document.getElementById("search-icon").innerHTML = LHIcons.search;</script>
+</body>
+</html>
