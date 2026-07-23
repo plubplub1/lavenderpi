@@ -11,7 +11,7 @@
   function render(snapshot) {
     const wrap = document.getElementById("log-timeline");
     if (!wrap) return;
-    const logs = snapshot.logs || [];
+    const logs = snapshot ? (snapshot.logs || []) : [];
 
     if (logs.length === 0) {
       wrap.innerHTML = `<div class="card" style="text-align:center;padding:4rem 1.5rem;color:var(--ink-faint);font-size:.875rem;">No activity recorded yet.</div>`;
