@@ -19,11 +19,15 @@
   function render(snapshot) {
     const grid = document.getElementById("overview-grid");
     const sourceNote = document.getElementById("overview-source-note");
-    if (!snapshot || !grid) return;
+    if (!grid) return;
 
-    sourceNote.textContent = snapshot.connectionSource === "live"
-      ? "Live data from your router"
-      : "Demo data — connect your router in Settings";
+    if (!snapshot) {
+      if (sourceNote) sourceNote.textContent = "No live router data — see the banner above.";
+      grid.innerHTML = "";
+      return;
+    }
+
+    sourceNote.textContent = `Live data from ${snapshot.router.model}`;
 
     const onlineDevices = (snapshot.devices || []).filter(d => d.online).length;
 
