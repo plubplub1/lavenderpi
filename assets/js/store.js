@@ -1,19 +1,18 @@
-// Lavender Home OS — polling store. Tries a live router fetch (best-effort,
-// see router-client.js) and falls back to realistic mock data automatically.
+// Lavender Home OS — polling store. Calls the real router client only.
+// There is NO fallback to mock/demo data — if the router can't be reached,
+// subscribers receive `null` and the UI (ConnectionBanner) explains why.
 const LHStore = (() => {
   let snapshot = null;
   let timer = null;
   const subscribers = new Set();
 
   async function tick() {
-    const settings = LHSettings.get();
-    let live = null;
     try {
-      live = await LHRouterClient.tryFetchLiveSnapshot(settings);
-    } catch {
-      live = null;
+      snapshot = await LHRouterClient.fetchSnapshot();
+    } catch (err) {
+      console.error("[LHStore] fetchSnapshot threw unexpectedly:", err);
+      snapshot = null;
     }
-    snapshot = live ?? LHMockData.generateSnapshot(Date.now());
     subscribers.forEach(fn => fn(snapshot));
   }
 
@@ -30,9 +29,14 @@ const LHStore = (() => {
     start();
   }
 
+  async function retryNow() {
+    await tick();
+    return snapshot;
+  }
+
   function subscribe(fn) {
     subscribers.add(fn);
-    if (snapshot) fn(snapshot);
+    fn(snapshot);
     return () => subscribers.delete(fn);
   }
 
@@ -40,5 +44,5 @@ const LHStore = (() => {
     return snapshot;
   }
 
-  return { start, restart, subscribe, getSnapshot };
+  return { start, restart, retryNow, subscribe, getSnapshot };
 })();
