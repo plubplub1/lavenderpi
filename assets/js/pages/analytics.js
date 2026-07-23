@@ -101,7 +101,7 @@
   }
 
   function updateCharts(snapshot) {
-    if (!bandwidthChart) return;
+    if (!bandwidthChart || !snapshot) return;
 
     const history = snapshot.trafficHistory || [];
     bandwidthChart.data.labels = history.map(p => new Date(p.timestamp).toLocaleTimeString(undefined, { hour12: false }));
