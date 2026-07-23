@@ -2,24 +2,22 @@
   function fillForm() {
     const s = LHSettings.get();
     document.getElementById("routerHost").value = s.routerHost;
-    document.getElementById("routerUsername").value = s.routerUsername;
-    document.getElementById("routerPassword").value = s.routerPassword;
     document.getElementById("anthropicApiKey").value = s.anthropicApiKey;
     document.getElementById("refreshInterval").value = s.refreshInterval;
     document.getElementById("refreshIntervalLabel").textContent = `${s.refreshInterval}s`;
   }
 
-  function renderConnectionStatus(snapshot) {
+  function renderConnectionStatus(d) {
     const box = document.getElementById("connection-status");
-    if (!box || !snapshot) return;
-    const live = snapshot.connectionSource === "live";
+    if (!box) return;
+    const live = d.connectionStatus === "online";
     box.innerHTML = `
       <div class="settings-status-row">
         ${live ? LHIcons.shieldCheck.replace("currentColor", "#4CFF78") : LHIcons.shieldAlert.replace("currentColor", "#B38CFF")}
         <div style="flex:1">
-          <div style="font-size:.875rem;font-weight:500;color:var(--ink);">${live ? "Connected to live router" : "Running on demo data"}</div>
+          <div style="font-size:.875rem;font-weight:500;color:var(--ink);">${live ? "Connected to live router" : "No live router data"}</div>
           <div style="margin-top:.125rem;font-size:.75rem;color:var(--ink-muted);">
-            ${live ? `${snapshot.router.model} at ${snapshot.router.lanIp}` : "Set your router's IP and login in the form below, then save."}
+            ${live ? `${d.targetRouter}` : `Status: ${d.connectionStatus} — see Diagnostics for details.`}
           </div>
         </div>
       </div>`;
@@ -29,8 +27,6 @@
     e.preventDefault();
     LHSettings.set({
       routerHost: document.getElementById("routerHost").value.trim(),
-      routerUsername: document.getElementById("routerUsername").value.trim(),
-      routerPassword: document.getElementById("routerPassword").value,
       anthropicApiKey: document.getElementById("anthropicApiKey").value.trim(),
       refreshInterval: Number(document.getElementById("refreshInterval").value)
     });
@@ -42,7 +38,10 @@
 
   function exportLogs() {
     const snapshot = LHStore.getSnapshot();
-    if (!snapshot) return;
+    if (!snapshot) {
+      alert("No live snapshot to export yet — connect to your router first.");
+      return;
+    }
     const blob = new Blob([JSON.stringify(snapshot.logs, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -59,7 +58,12 @@
       document.getElementById("refreshIntervalLabel").textContent = `${e.target.value}s`;
     });
     document.getElementById("export-logs-btn").addEventListener("click", exportLogs);
+    document.getElementById("open-login-btn").addEventListener("click", () => LHLayout.openLoginDialog());
+    document.getElementById("forget-credentials-btn").addEventListener("click", () => {
+      LHRouterClient.clearCredentials();
+      LHStore.retryNow();
+    });
   });
 
-  LHStore.subscribe(renderConnectionStatus);
+  LHRouterClient.subscribeDiagnostics(renderConnectionStatus);
 })();
