@@ -57,7 +57,7 @@
   });
 
   LHStore.subscribe((snapshot) => {
-    allDevices = snapshot.devices || [];
+    allDevices = snapshot ? (snapshot.devices || []) : [];
     applyFilter();
   });
 })();
